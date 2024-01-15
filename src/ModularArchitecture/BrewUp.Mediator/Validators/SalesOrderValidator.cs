@@ -1,7 +1,7 @@
 ﻿using BrewUp.Shared.Contracts;
 using FluentValidation;
 
-namespace BrewUp.Sales.Facade.Validators;
+namespace BrewUp.Mediator.Validators;
 
 public class SalesOrderValidator : AbstractValidator<SalesOrderJson>
 {

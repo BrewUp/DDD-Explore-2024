@@ -34,4 +34,7 @@ public class SalesOrder : EntityBase
 			Rows = rows
 		};
 	}
+
+	public SalesOrderJson ToJson() =>
+		new(Id, SalesOrderNumber, CustomerId, CustomerName, OrderDate, Rows);
 }

@@ -1,23 +1,23 @@
-﻿using BrewUp.Sales.Facade.Validators;
+﻿using BrewUp.Mediator.Validators;
 using BrewUp.Shared.Contracts;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace BrewUp.Sales.Facade.Endpoints;
+namespace BrewUp.Mediator.Endpoints;
 
-public static class SalesEndpoints
+public static class MediatorEndpoints
 {
-	public static IEndpointRouteBuilder MapSalesEndpoints(this IEndpointRouteBuilder endpoints)
+	public static IEndpointRouteBuilder MapMediatorEndpoints(this IEndpointRouteBuilder endpoints)
 	{
-		var group = endpoints.MapGroup("/v1/sales/")
-			.WithTags("Sales");
+		var group = endpoints.MapGroup("/v1/brewup/")
+			.WithTags("BrewUp");
 
 		group.MapPost("/", HandleCreateOrder)
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status201Created)
-			.WithName("CreateSalesOrder");
+			.WithName("OrderBeers");
 
 		group.MapGet("/", HandleGetOrders)
 			.Produces(StatusCodes.Status400BadRequest)
@@ -28,26 +28,27 @@ public static class SalesEndpoints
 	}
 
 	public static async Task<IResult> HandleCreateOrder(
-		ISalesFacade salesFacade,
+		IBrewUpFacade brewUpFacade,
 		IValidator<SalesOrderJson> validator,
 		ValidationHandler validationHandler,
 		SalesOrderJson body,
 		CancellationToken cancellationToken)
 	{
+
 		await validationHandler.ValidateAsync(validator, body);
 		if (!validationHandler.IsValid)
 			return Results.BadRequest(validationHandler.Errors);
 
-		var orderId = await salesFacade.CreateOrderAsync(body, cancellationToken);
+		var orderId = await brewUpFacade.CreateOrderAsync(body, cancellationToken);
 
-		return Results.Created($"/v1/sales/orders/{orderId}", orderId);
+		return Results.Created($"/v1/brewup/orders/{orderId}", orderId);
 	}
 
 	public static async Task<IResult> HandleGetOrders(
-		ISalesFacade salesFacade,
+		IBrewUpFacade brewUpFacade,
 		CancellationToken cancellationToken)
 	{
-		var orders = await salesFacade.GetOrdersAsync(cancellationToken);
+		var orders = await brewUpFacade.GetOrdersAsync(cancellationToken);
 
 		return Results.Ok(orders);
 	}

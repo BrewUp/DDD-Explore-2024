@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BrewUp.Sales.Domain;
 
-public sealed class SalesOrderService([FromKeyedServices("sales")] IRepository repository) : ISalesOrderService
+public sealed class SalesDomainService([FromKeyedServices("sales")] IRepository repository) : ISalesDomainService
 {
 	public async Task CreateSalesOrderAsync(SalesOrderId salesOrderId, SalesOrderNumber salesOrderNumber, OrderDate orderDate,
 		CustomerId customerId, CustomerName customerName, IEnumerable<SalesOrderRowJson> rows, CancellationToken cancellationToken)
