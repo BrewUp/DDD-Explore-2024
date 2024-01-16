@@ -1,18 +1,18 @@
-﻿using BrewUp.Mediator.Validators;
+﻿using BrewUp.Sales.Facade.Validators;
 using BrewUp.Shared.Contracts;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace BrewUp.Mediator.Endpoints;
+namespace BrewUp.Sales.Facade.Endpoints;
 
-public static class MediatorEndpoints
+public static class SalesEndpoints
 {
-	public static IEndpointRouteBuilder MapMediatorEndpoints(this IEndpointRouteBuilder endpoints)
+	public static IEndpointRouteBuilder MapSalesEndpoints(this IEndpointRouteBuilder endpoints)
 	{
-		var group = endpoints.MapGroup("/v1/brewup/")
-			.WithTags("BrewUp");
+		var group = endpoints.MapGroup("/v1/sales/")
+			.WithTags("sales");
 
 		group.MapPost("/", HandleCreateOrder)
 			.Produces(StatusCodes.Status400BadRequest)
@@ -28,27 +28,26 @@ public static class MediatorEndpoints
 	}
 
 	public static async Task<IResult> HandleCreateOrder(
-		IBrewUpFacade brewUpFacade,
+		ISalesFacade salesFacade,
 		IValidator<SalesOrderJson> validator,
 		ValidationHandler validationHandler,
 		SalesOrderJson body,
 		CancellationToken cancellationToken)
 	{
-
 		await validationHandler.ValidateAsync(validator, body);
 		if (!validationHandler.IsValid)
 			return Results.BadRequest(validationHandler.Errors);
 
-		var orderId = await brewUpFacade.CreateOrderAsync(body, cancellationToken);
+		var orderId = await salesFacade.CreateOrderAsync(body, cancellationToken);
 
 		return Results.Created($"/v1/brewup/orders/{orderId}", orderId);
 	}
 
 	public static async Task<IResult> HandleGetOrders(
-		IBrewUpFacade brewUpFacade,
+		ISalesFacade salesFacade,
 		CancellationToken cancellationToken)
 	{
-		var orders = await brewUpFacade.GetOrdersAsync(cancellationToken);
+		var orders = await salesFacade.GetOrdersAsync(cancellationToken);
 
 		return Results.Ok(orders);
 	}

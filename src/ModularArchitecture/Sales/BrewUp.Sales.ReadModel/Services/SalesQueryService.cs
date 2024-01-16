@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BrewUp.Sales.ReadModel.Services;
 
-public sealed class SalesQueryService
+public sealed class SalesQueryService 
 	(ILoggerFactory loggerFactory, IQueries<SalesOrder> queries) : ServiceBase(loggerFactory), ISalesQueryService
 {
 	public async Task<PagedResult<SalesOrderJson>> GetSalesOrdersAsync(int page, int pageSize, CancellationToken cancellationToken)

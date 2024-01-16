@@ -9,10 +9,18 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+	<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BrewUp.Shared\BrewUp.Shared.csproj" />
+    <ProjectReference Include="..\Sales\BrewUp.Sales.Domain\BrewUp.Sales.Domain.csproj" />
+    <ProjectReference Include="..\Sales\BrewUp.Sales.Facade\BrewUp.Sales.Facade.csproj" />
+    <ProjectReference Include="..\Sales\BrewUp.Sales.ReadModel\BrewUp.Sales.ReadModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Warehouses\" />
   </ItemGroup>
 
 </Project>

@@ -12,8 +12,6 @@ public class InfrastructureModule : IModule
 	{
 		builder.Services.AddMongoDb(builder.Configuration.GetSection("BrewUp:MongoDbSettings").Get<MongoDbSettings>()!);
 
-		builder.Services.AddSalesInfrastructure();
-
 		return builder.Services;
 	}
 
