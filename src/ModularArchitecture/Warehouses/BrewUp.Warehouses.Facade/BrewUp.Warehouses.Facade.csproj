@@ -14,6 +14,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BrewUp.Warehouses.Domain\BrewUp.Warehouses.Domain.csproj" />
+    <ProjectReference Include="..\BrewUp.Warehouses.Infrastructures\BrewUp.Warehouses.Infrastructures.csproj" />
+    <ProjectReference Include="..\BrewUp.Warehouses.SharedKernel\BrewUp.Warehouses.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Endpoints\" />
   </ItemGroup>
 
 </Project>

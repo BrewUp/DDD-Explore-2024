@@ -1,9 +1,16 @@
-﻿namespace BrewUp.Warehouses.Domain;
+﻿using BrewUp.Shared.CustomTypes;
+using BrewUp.Shared.ReadModel;
+using BrewUp.Warehouses.Domain.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 
-public sealed class WarehousesDomainService : IWarehousesDomainService
+namespace BrewUp.Warehouses.Domain;
+
+public sealed class WarehousesDomainService([FromKeyedServices("warehouses")] IRepository repository) : IWarehousesDomainService
 {
-	public Task UpdateAvailabilityDueToSalesOrderAsync()
+	public async Task UpdateAvailabilityDueToProductionOrderAsync(BeerId beerId, BeerName beerName, Quantity quantity,
+		CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		var aggregate = Entities.Availability.CreateAvailability(beerId, beerName, quantity);
+		await repository.InsertAsync(aggregate.MapToReadModel(), cancellationToken);
 	}
 }

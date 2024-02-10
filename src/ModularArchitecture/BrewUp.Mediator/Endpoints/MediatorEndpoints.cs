@@ -19,11 +19,6 @@ public static class MediatorEndpoints
 			.Produces(StatusCodes.Status201Created)
 			.WithName("OrderBeers");
 
-		group.MapGet("/", HandleGetOrders)
-			.Produces(StatusCodes.Status400BadRequest)
-			.Produces(StatusCodes.Status200OK)
-			.WithName("GetSalesOrders");
-
 		return endpoints;
 	}
 
@@ -42,14 +37,5 @@ public static class MediatorEndpoints
 		var orderId = await brewUpFacade.CreateOrderAsync(body, cancellationToken);
 
 		return Results.Created($"/v1/brewup/orders/{orderId}", orderId);
-	}
-
-	public static async Task<IResult> HandleGetOrders(
-		IBrewUpFacade brewUpFacade,
-		CancellationToken cancellationToken)
-	{
-		var orders = await brewUpFacade.GetOrdersAsync(cancellationToken);
-
-		return Results.Ok(orders);
 	}
 }

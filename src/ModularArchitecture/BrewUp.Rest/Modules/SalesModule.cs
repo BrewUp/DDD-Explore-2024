@@ -1,4 +1,5 @@
 ﻿using BrewUp.Sales.Facade;
+using BrewUp.Sales.Facade.Endpoints;
 
 namespace BrewUp.Rest.Modules;
 
@@ -9,5 +10,5 @@ public class SalesModule : IModule
 
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder) => builder.Services.AddSales();
 
-	public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints) => endpoints;
+	public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints) => endpoints.MapSalesEndpoints();
 }
