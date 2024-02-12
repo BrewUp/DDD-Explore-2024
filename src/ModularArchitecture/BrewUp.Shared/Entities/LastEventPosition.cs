@@ -1,8 +1,10 @@
-﻿namespace BrewUp.Shared.Entities
+﻿using BrewUp.Shared.ReadModel;
+
+namespace BrewUp.Shared.Entities
 {
-  public class LastEventPosition : EntityBase
-  {
-    public long CommitPosition { get; set; }
-    public long PreparePosition { get; set; }
-  }
+	public class LastEventPosition : EntityBase
+	{
+		public long CommitPosition { get; set; }
+		public long PreparePosition { get; set; }
+	}
 }

@@ -1,5 +1,5 @@
 ﻿using BrewUp.Shared.CustomTypes;
-using BrewUp.Shared.Entities;
+using Muflone.Core;
 
 namespace BrewUp.Warehouses.Domain.Entities;
 
@@ -20,7 +20,7 @@ public class Availability : AggregateRoot
 
 	private Availability(BeerId beerId, BeerName beerName, Quantity quantity)
 	{
-		Id = beerId.Value.ToString();
+		Id = beerId;
 
 		_beerId = beerId;
 		_beerName = beerName;

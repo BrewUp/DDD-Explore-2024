@@ -1,3 +1,10 @@
-﻿namespace BrewUp.Shared.CustomTypes;
+﻿using Muflone.Core;
 
-public record BeerId(Guid Value);
+namespace BrewUp.Shared.CustomTypes;
+
+public sealed class BeerId : DomainId
+{
+	public BeerId(Guid value) : base(value)
+	{
+	}
+}

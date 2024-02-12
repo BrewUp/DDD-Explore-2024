@@ -1,6 +1,6 @@
 ﻿using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
-using BrewUp.Shared.Entities;
+using BrewUp.Shared.ReadModel;
 
 namespace BrewUp.Warehouses.ReadModel.Dtos;
 

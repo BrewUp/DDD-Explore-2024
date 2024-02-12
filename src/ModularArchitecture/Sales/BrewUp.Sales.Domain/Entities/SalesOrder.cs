@@ -1,42 +1,48 @@
-﻿using BrewUp.Sales.Domain.Helper;
+﻿using BrewUp.Sales.Domain.Helpers;
 using BrewUp.Sales.SharedKernel.CustomTypes;
+using BrewUp.Sales.SharedKernel.Events;
 using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
-using BrewUp.Shared.Entities;
+using Muflone.Core;
 
 namespace BrewUp.Sales.Domain.Entities;
 
 public class SalesOrder : AggregateRoot
 {
-	internal readonly SalesOrderId _salesOrderId;
-	internal readonly SalesOrderNumber _salesOrderNumber;
-	internal readonly OrderDate _orderDate;
+	internal SalesOrderId _salesOrderId;
+	internal SalesOrderNumber _salesOrderNumber;
+	internal OrderDate _orderDate;
 
-	internal readonly CustomerId _customerId;
-	internal readonly CustomerName _customerName;
+	internal CustomerId _customerId;
+	internal CustomerName _customerName;
 
-	internal readonly IEnumerable<SalesOrderRow> _rows;
+	internal IEnumerable<SalesOrderRow> _rows;
 
 	protected SalesOrder()
 	{
 	}
 
-	internal static SalesOrder CreateSalesOrder(SalesOrderId salesOrderId, SalesOrderNumber salesOrderNumber,
+	internal static SalesOrder CreateSalesOrder(SalesOrderId salesOrderId, Guid correlationId, SalesOrderNumber salesOrderNumber,
 		OrderDate orderDate, CustomerId customerId, CustomerName customerName, IEnumerable<SalesOrderRowJson> rows)
 	{
-		return new SalesOrder(salesOrderId, salesOrderNumber, orderDate, customerId, customerName, rows.MapToDomainRows());
+		return new SalesOrder(salesOrderId, correlationId, salesOrderNumber, orderDate, customerId, customerName,
+			rows);
 	}
 
-	private SalesOrder(SalesOrderId salesOrderId, SalesOrderNumber salesOrderNumber, OrderDate orderDate,
-		CustomerId customerId, CustomerName customerName, IEnumerable<SalesOrderRow> row)
+	private SalesOrder(SalesOrderId salesOrderId, Guid correlationId, SalesOrderNumber salesOrderNumber, OrderDate orderDate,
+		CustomerId customerId, CustomerName customerName, IEnumerable<SalesOrderRowJson> rows)
 	{
-		_salesOrderId = salesOrderId;
-		_salesOrderNumber = salesOrderNumber;
-		_orderDate = orderDate;
+		// Check SalesOrder invariants
+		RaiseEvent(new SalesOrderCreated(salesOrderId, correlationId, salesOrderNumber, orderDate, customerId, customerName, rows));
+	}
 
-		_customerId = customerId;
-		_customerName = customerName;
-
-		_rows = row;
+	private void Apply(SalesOrderCreated @event)
+	{
+		_salesOrderId = @event.SalesOrderId;
+		_salesOrderNumber = @event.SalesOrderNumber;
+		_orderDate = @event.OrderDate;
+		_customerId = @event.CustomerId;
+		_customerName = @event.CustomerName;
+		_rows = @event.Rows.MapToDomainRows();
 	}
 }

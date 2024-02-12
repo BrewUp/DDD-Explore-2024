@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BrewUp.Warehouses.Domain;
 
-public sealed class WarehousesDomainService([FromKeyedServices("warehouses")] IRepository repository) : IWarehousesDomainService
+public sealed class WarehousesDomainService([FromKeyedServices("warehouses")] IPersister repository) : IWarehousesDomainService
 {
 	public async Task UpdateAvailabilityDueToProductionOrderAsync(BeerId beerId, BeerName beerName, Quantity quantity,
 		CancellationToken cancellationToken)

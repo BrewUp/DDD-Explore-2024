@@ -2,7 +2,7 @@
 using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
 
-namespace BrewUp.Sales.Domain.Helper;
+namespace BrewUp.Sales.Domain.Helpers;
 
 public static class DomainHelper
 {

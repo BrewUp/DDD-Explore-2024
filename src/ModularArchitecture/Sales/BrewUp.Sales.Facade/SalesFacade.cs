@@ -1,13 +1,14 @@
-﻿using BrewUp.Sales.Domain;
-using BrewUp.Sales.ReadModel.Services;
+﻿using BrewUp.Sales.ReadModel.Services;
+using BrewUp.Sales.SharedKernel.Commands;
 using BrewUp.Sales.SharedKernel.CustomTypes;
 using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
 using BrewUp.Shared.Entities;
+using Muflone.Persistence;
 
 namespace BrewUp.Sales.Facade;
 
-public sealed class SalesFacade(ISalesDomainService salesDomainService,
+public sealed class SalesFacade(IServiceBus serviceBus,
 	ISalesQueryService salesQueryService) : ISalesFacade
 {
 	public async Task<string> CreateOrderAsync(SalesOrderJson body, CancellationToken cancellationToken)
@@ -15,10 +16,10 @@ public sealed class SalesFacade(ISalesDomainService salesDomainService,
 		if (body.SalesOrderId.Equals(string.Empty))
 			body = body with { SalesOrderId = Guid.NewGuid().ToString() };
 
-		await salesDomainService.CreateSalesOrderAsync(new SalesOrderId(new Guid(body.SalesOrderId)),
-			new SalesOrderNumber(body.SalesOrderNumber), new OrderDate(body.OrderDate),
-			new CustomerId(body.CustomerId), new CustomerName(body.CustomerName),
-			body.Rows, cancellationToken);
+		CreateSalesOrder command = new(new SalesOrderId(new Guid(body.SalesOrderId)),
+						Guid.NewGuid(), new SalesOrderNumber(body.SalesOrderNumber), new OrderDate(body.OrderDate),
+									new CustomerId(body.CustomerId), new CustomerName(body.CustomerName), body.Rows);
+		await serviceBus.SendAsync(command, cancellationToken);
 
 		return body.SalesOrderId;
 	}

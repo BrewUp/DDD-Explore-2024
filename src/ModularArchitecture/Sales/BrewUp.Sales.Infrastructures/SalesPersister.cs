@@ -1,16 +1,15 @@
-﻿using BrewUp.Shared.Entities;
-using BrewUp.Shared.ReadModel;
+﻿using BrewUp.Shared.ReadModel;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace BrewUp.Sales.Infrastructures;
 
-public class SalesRepository : IRepository
+public class SalesPersister : IPersister
 {
 	private readonly IMongoDatabase _database;
 	private readonly ILogger _logger;
 
-	public SalesRepository(IMongoClient mongoClient,
+	public SalesPersister(IMongoClient mongoClient,
 		ILoggerFactory loggerFactory)
 	{
 		_logger = loggerFactory.CreateLogger(GetType());

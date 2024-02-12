@@ -11,4 +11,8 @@
       <Folder Include="Helpers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Muflone" Version="6.2.0" />
+    </ItemGroup>
+
 </Project>
