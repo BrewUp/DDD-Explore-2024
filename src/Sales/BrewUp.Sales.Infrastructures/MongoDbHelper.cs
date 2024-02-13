@@ -7,7 +7,7 @@ public static class MongoDbHelper
 {
 	public static IServiceCollection AddSalesMongoDb(this IServiceCollection services)
 	{
-		services.AddKeyedScoped<IRepository, SalesRepository>("sales");
+		services.AddKeyedScoped<IPersister, SalesPersister>("sales");
 
 		return services;
 	}

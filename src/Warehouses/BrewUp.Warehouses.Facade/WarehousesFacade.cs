@@ -1,15 +1,17 @@
 ﻿using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
+using BrewUp.Shared.Entities;
 using BrewUp.Warehouses.Domain;
+using BrewUp.Warehouses.ReadModel.Services;
 using BrewUp.Warehouses.SharedKernel.Contracts;
 
 namespace BrewUp.Warehouses.Facade;
 
-public sealed class WarehousesFacade(IWarehousesDomainService warehousesDomainService) : IWarehousesFacade
+public sealed class WarehousesFacade(IWarehousesDomainService warehousesDomainService, IAvailabilityQueryService availabilityQueryService) : IWarehousesFacade
 {
-	public Task<object> GetAvailabilityAsync(IEnumerable<BeerAvailabilityJson> beers, CancellationToken cancellationToken)
+	public async Task<PagedResult<BeerAvailabilityJson>> GetAvailabilityAsync(Guid beerId, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		return await availabilityQueryService.GetAvailabilityAsync(beerId, cancellationToken);
 	}
 
 	public async Task SetAvailabilityAsync(SetAvailabilityJson availability, CancellationToken cancellationToken)

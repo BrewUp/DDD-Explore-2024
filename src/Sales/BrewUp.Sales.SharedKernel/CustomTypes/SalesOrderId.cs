@@ -1,3 +1,10 @@
-﻿namespace BrewUp.Sales.SharedKernel.CustomTypes;
+﻿using Muflone.Core;
 
-public record SalesOrderId(Guid Value);
+namespace BrewUp.Sales.SharedKernel.CustomTypes;
+
+public sealed class SalesOrderId : DomainId
+{
+	public SalesOrderId(Guid value) : base(value)
+	{
+	}
+}
