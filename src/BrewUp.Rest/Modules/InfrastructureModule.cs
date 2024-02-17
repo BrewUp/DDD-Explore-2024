@@ -13,8 +13,7 @@ public class InfrastructureModule : IModule
 
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder)
 	{
-		builder.Services.AddMongoDb(builder.Configuration.GetSection("BrewUp:MongoDbSettings").Get<MongoDbSettings>()!);
-		builder.Services.AddInfrastructure(builder.Configuration.GetSection("BrewUp:MongoDb").Get<MongoDbSettings>()!,
+		builder.Services.AddInfrastructure(builder.Configuration.GetSection("BrewUp:MongoDbSettings").Get<MongoDbSettings>()!,
 			builder.Configuration.GetSection("BrewUp:EventStore").Get<EventStoreSettings>()!);
 
 		var rabbitMqSettings = builder.Configuration.GetSection("BrewUp:RabbitMQ")

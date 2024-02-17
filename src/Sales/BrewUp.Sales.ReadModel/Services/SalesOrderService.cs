@@ -5,11 +5,12 @@ using BrewUp.Shared.CustomTypes;
 using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Entities;
 using BrewUp.Shared.ReadModel;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace BrewUp.Sales.ReadModel.Services;
 
-public sealed class SalesOrderService(ILoggerFactory loggerFactory, IPersister persister, IQueries<SalesOrder> queries)
+public sealed class SalesOrderService(ILoggerFactory loggerFactory, [FromKeyedServices("sales")] IPersister persister, IQueries<SalesOrder> queries)
 	: ServiceBase(loggerFactory, persister), ISalesOrderService
 {
 	public async Task CreateSalesOrderAsync(SalesOrderId salesOrderId, SalesOrderNumber salesOrderNumber, CustomerId customerId,
