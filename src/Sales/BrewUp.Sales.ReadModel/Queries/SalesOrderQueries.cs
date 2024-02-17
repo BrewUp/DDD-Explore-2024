@@ -7,16 +7,22 @@ using System.Linq.Expressions;
 
 namespace BrewUp.Sales.ReadModel.Queries;
 
-public sealed class SalesOrderQueries(IMongoClient mongoClient) : IQueries<SalesOrder>
+public sealed class SalesOrderQueries : IQueries<SalesOrder>
 {
-	private readonly IMongoDatabase _database = mongoClient.GetDatabase("Sales");
+	private readonly IMongoClient _mongoClient;
+	private IMongoDatabase _database;
+
+	public SalesOrderQueries(IMongoClient mongoClient)
+	{
+		_mongoClient = mongoClient;
+	}
 
 	public async Task<SalesOrder> GetByIdAsync(string id, CancellationToken cancellationToken)
 	{
 		var collection = _database.GetCollection<SalesOrder>(nameof(SalesOrder));
 		var filter = Builders<SalesOrder>.Filter.Eq("_id", id);
 		return (await collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken) > 0
-			? (await collection.FindAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false)).First()
+			? (await collection.FindAsync(filter, cancellationToken: cancellationToken)).First()
 			: null)!;
 	}
 

@@ -1,4 +1,4 @@
-﻿using BrewUp.Infrastructures.RabbitMq;
+﻿using BrewUp.Infrastructure.RabbitMq;
 using BrewUp.Sales.Infrastructures.RabbitMq.Commands;
 using BrewUp.Sales.Infrastructures.RabbitMq.Events;
 using BrewUp.Sales.ReadModel.Services;
@@ -37,13 +37,6 @@ public static class RabbitMqHelper
 				loggerFactory),
 			new SalesOrderCreatedConsumer(serviceProvider.GetRequiredService<ISalesOrderService>(),
 				serviceProvider.GetRequiredService<IEventBus>(),
-				mufloneConnectionFactory, loggerFactory),
-			
-			new BeersForSalesOrderAvailableConsumer(serviceProvider.GetRequiredService<IServiceBus>(),
-				mufloneConnectionFactory, loggerFactory),
-			
-			new CompleteSalesOrderConsumer(repository, mufloneConnectionFactory, loggerFactory),
-			new SalesOrderCompletedConsumer(serviceProvider.GetRequiredService<ISalesOrderService>(),
 				mufloneConnectionFactory, loggerFactory)
 		});
 		services.AddMufloneRabbitMQConsumers(consumers);

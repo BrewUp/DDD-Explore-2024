@@ -1,4 +1,6 @@
-﻿using BrewUp.Infrastructure.MongoDb;
+﻿using BrewUp.Infrastructure;
+using BrewUp.Infrastructure.MongoDb;
+using BrewUp.Infrastructure.RabbitMq;
 using BrewUp.Sales.Facade;
 using BrewUp.Warehouses.Facade;
 
@@ -12,8 +14,13 @@ public class InfrastructureModule : IModule
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder)
 	{
 		builder.Services.AddMongoDb(builder.Configuration.GetSection("BrewUp:MongoDbSettings").Get<MongoDbSettings>()!);
+		builder.Services.AddInfrastructure(builder.Configuration.GetSection("BrewUp:MongoDb").Get<MongoDbSettings>()!,
+			builder.Configuration.GetSection("BrewUp:EventStore").Get<EventStoreSettings>()!);
 
-		builder.Services.AddSalesInfrastructure();
+		var rabbitMqSettings = builder.Configuration.GetSection("BrewUp:RabbitMQ")
+			.Get<RabbitMqSettings>()!;
+
+		builder.Services.AddSalesInfrastructure(rabbitMqSettings);
 		builder.Services.AddWarehousesInfrastructure();
 
 		return builder.Services;

@@ -3,6 +3,7 @@ using BrewUp.Sales.SharedKernel.CustomTypes;
 using BrewUp.Sales.SharedKernel.Events;
 using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
+using BrewUp.Shared.DomainIds;
 using Muflone.Core;
 
 namespace BrewUp.Sales.Domain.Entities;

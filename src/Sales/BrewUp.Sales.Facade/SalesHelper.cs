@@ -1,7 +1,8 @@
-﻿using BrewUp.Sales.Infrastructures;
+﻿using BrewUp.Infrastructure.RabbitMq;
+using BrewUp.Sales.Infrastructures;
+using BrewUp.Sales.Infrastructures.RabbitMq;
 using BrewUp.Sales.ReadModel.Dtos;
 using BrewUp.Sales.ReadModel.Queries;
-using BrewUp.Sales.ReadModel.Services;
 using BrewUp.Shared.ReadModel;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,15 +16,15 @@ public static class SalesHelper
 		services.AddFluentValidationAutoValidation();
 
 		services.AddScoped<ISalesFacade, SalesFacade>();
-		services.AddScoped<ISalesQueryService, SalesQueryService>();
 		services.AddScoped<IQueries<SalesOrder>, SalesOrderQueries>();
 
 		return services;
 	}
 
-	public static IServiceCollection AddSalesInfrastructure(this IServiceCollection services)
+	public static IServiceCollection AddSalesInfrastructure(this IServiceCollection services, RabbitMqSettings rabbitMqSettings)
 	{
 		services.AddSalesMongoDb();
+		services.AddRabbitMqForSalesModule(rabbitMqSettings);
 
 		return services;
 	}

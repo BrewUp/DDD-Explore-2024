@@ -1,6 +1,7 @@
 ﻿using BrewUp.Sales.SharedKernel.CustomTypes;
 using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
+using BrewUp.Shared.DomainIds;
 using Muflone.Messages.Events;
 
 namespace BrewUp.Sales.SharedKernel.Events;

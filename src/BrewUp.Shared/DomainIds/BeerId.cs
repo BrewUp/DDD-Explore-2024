@@ -1,8 +1,8 @@
 ﻿using Muflone.Core;
 
-namespace BrewUp.Shared.CustomTypes;
+namespace BrewUp.Shared.DomainIds;
 
-public sealed class BeerId : DomainId
+public class BeerId : DomainId
 {
 	public BeerId(Guid value) : base(value)
 	{

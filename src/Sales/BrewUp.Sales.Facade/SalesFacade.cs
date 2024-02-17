@@ -1,15 +1,17 @@
-﻿using BrewUp.Sales.ReadModel.Services;
+﻿using BrewUp.Sales.ReadModel.Dtos;
 using BrewUp.Sales.SharedKernel.Commands;
 using BrewUp.Sales.SharedKernel.CustomTypes;
 using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
+using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Entities;
+using BrewUp.Shared.ReadModel;
 using Muflone.Persistence;
 
 namespace BrewUp.Sales.Facade;
 
 public sealed class SalesFacade(IServiceBus serviceBus,
-	ISalesQueryService salesQueryService) : ISalesFacade
+	IQueries<SalesOrder> queries) : ISalesFacade
 {
 	public async Task<string> CreateOrderAsync(SalesOrderJson body, CancellationToken cancellationToken)
 	{
@@ -26,6 +28,10 @@ public sealed class SalesFacade(IServiceBus serviceBus,
 
 	public async Task<PagedResult<SalesOrderJson>> GetOrdersAsync(CancellationToken cancellationToken)
 	{
-		return await salesQueryService.GetSalesOrdersAsync(0, 30, cancellationToken);
+		var salesOrders = await queries.GetByFilterAsync(null, 0, 100, cancellationToken);
+
+		return salesOrders.TotalRecords > 0
+			? new PagedResult<SalesOrderJson>(salesOrders.Results.Select(r => r.ToJson()), salesOrders.Page, salesOrders.PageSize, salesOrders.TotalRecords)
+			: new PagedResult<SalesOrderJson>(Enumerable.Empty<SalesOrderJson>(), 0, 0, 0);
 	}
 }

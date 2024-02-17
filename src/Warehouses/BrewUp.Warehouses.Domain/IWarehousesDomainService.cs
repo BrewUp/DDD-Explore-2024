@@ -1,4 +1,5 @@
 ﻿using BrewUp.Shared.CustomTypes;
+using BrewUp.Shared.DomainIds;
 
 namespace BrewUp.Warehouses.Domain;
 
