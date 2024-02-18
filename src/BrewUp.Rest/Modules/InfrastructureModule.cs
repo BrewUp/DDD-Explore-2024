@@ -20,7 +20,7 @@ public class InfrastructureModule : IModule
 			.Get<RabbitMqSettings>()!;
 
 		builder.Services.AddSalesInfrastructure(rabbitMqSettings);
-		builder.Services.AddWarehousesInfrastructure();
+		builder.Services.AddWarehousesInfrastructure(rabbitMqSettings);
 
 		return builder.Services;
 	}

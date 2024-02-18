@@ -1,7 +1,7 @@
 ﻿using BrewUp.Shared.ReadModel;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BrewUp.Warehouses.Infrastructures;
+namespace BrewUp.Warehouses.Infrastructures.MongoDb;
 
 public static class MongoDbHelper
 {

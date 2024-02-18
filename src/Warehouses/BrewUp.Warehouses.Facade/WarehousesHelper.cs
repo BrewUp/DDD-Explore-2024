@@ -1,7 +1,8 @@
-﻿using BrewUp.Shared.ReadModel;
-using BrewUp.Warehouses.Domain;
+﻿using BrewUp.Infrastructure.RabbitMq;
+using BrewUp.Shared.ReadModel;
 using BrewUp.Warehouses.Facade.Validators;
-using BrewUp.Warehouses.Infrastructures;
+using BrewUp.Warehouses.Infrastructures.MongoDb;
+using BrewUp.Warehouses.Infrastructures.RabbitMq;
 using BrewUp.Warehouses.ReadModel.Dtos;
 using BrewUp.Warehouses.ReadModel.Queries;
 using BrewUp.Warehouses.ReadModel.Services;
@@ -20,16 +21,16 @@ public static class WarehousesHelper
 		services.AddSingleton<ValidationHandler>();
 
 		services.AddScoped<IWarehousesFacade, WarehousesFacade>();
-		services.AddScoped<IWarehousesDomainService, WarehousesDomainService>();
-		services.AddScoped<IAvailabilityQueryService, AvailabilityQueryService>();
+		services.AddScoped<IAvailabilityService, AvailabilityService>();
 		services.AddScoped<IQueries<Availability>, AvailabilityQueries>();
 
 		return services;
 	}
 
-	public static IServiceCollection AddWarehousesInfrastructure(this IServiceCollection services)
+	public static IServiceCollection AddWarehousesInfrastructure(this IServiceCollection services, RabbitMqSettings rabbitMqSettings)
 	{
 		services.AddWarehousesMongoDb();
+		services.AddRabbitMqForWarehousesModule(rabbitMqSettings);
 
 		return services;
 	}

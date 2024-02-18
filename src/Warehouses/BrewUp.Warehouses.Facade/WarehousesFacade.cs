@@ -1,24 +1,22 @@
-﻿using BrewUp.Shared.Contracts;
-using BrewUp.Shared.CustomTypes;
+﻿using BrewUp.Shared.CustomTypes;
 using BrewUp.Shared.DomainIds;
-using BrewUp.Shared.Entities;
-using BrewUp.Warehouses.Domain;
-using BrewUp.Warehouses.ReadModel.Services;
+using BrewUp.Warehouses.SharedKernel.Commands;
 using BrewUp.Warehouses.SharedKernel.Contracts;
+using Muflone.Persistence;
 
 namespace BrewUp.Warehouses.Facade;
 
-public sealed class WarehousesFacade(IWarehousesDomainService warehousesDomainService, IAvailabilityQueryService availabilityQueryService) : IWarehousesFacade
+public sealed class WarehousesFacade(IServiceBus serviceBus) : IWarehousesFacade
 {
-	public async Task<PagedResult<BeerAvailabilityJson>> GetAvailabilityAsync(Guid beerId, CancellationToken cancellationToken)
-	{
-		return await availabilityQueryService.GetAvailabilityAsync(beerId, cancellationToken);
-	}
 
 	public async Task SetAvailabilityAsync(SetAvailabilityJson availability, CancellationToken cancellationToken)
 	{
-		await warehousesDomainService.UpdateAvailabilityDueToProductionOrderAsync(
-			new BeerId(new Guid(availability.BeerId)), new BeerName(availability.BeerName), availability.Quantity,
-			cancellationToken);
+		cancellationToken.ThrowIfCancellationRequested();
+
+		UpdateAvailabilityDueToProductionOrder updateAvailabilityDueToProductionOrder =
+			new(new BeerId(new Guid(availability.BeerId)), Guid.NewGuid(), new BeerName(availability.BeerName),
+				availability.Quantity);
+
+		await serviceBus.SendAsync(updateAvailabilityDueToProductionOrder, cancellationToken);
 	}
 }
