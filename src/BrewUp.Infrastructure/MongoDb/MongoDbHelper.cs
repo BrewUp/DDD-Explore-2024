@@ -1,6 +1,4 @@
-﻿using BrewUp.Sales.Infrastructures;
-using BrewUp.Shared.ReadModel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 
 namespace BrewUp.Infrastructure.MongoDb;
@@ -11,7 +9,6 @@ public static class MongoDbHelper
 		MongoDbSettings mongoDbSettings)
 	{
 		services.AddSingleton<IMongoClient>(new MongoClient(mongoDbSettings.ConnectionString));
-		services.AddKeyedScoped<IRepository, SalesRepository>("sales");
 
 		return services;
 	}

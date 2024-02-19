@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BrewUp.DomainModel\BrewUp.DomainModel.csproj" />
+    <ProjectReference Include="..\BrewUp.ReadModel\BrewUp.ReadModel.csproj" />
+  </ItemGroup>
+
+</Project>
