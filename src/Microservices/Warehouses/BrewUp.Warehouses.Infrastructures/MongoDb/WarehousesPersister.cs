@@ -3,16 +3,16 @@ using BrewUp.Shared.ReadModel;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
-namespace BrewUp.Sales.Infrastructures.MongoDb;
+namespace BrewUp.Warehouses.Infrastructures.MongoDb;
 
-public class SalesPersister : IPersister
+public class WarehousesPersister : IPersister
 {
 	private readonly IMongoDatabase _database;
 	private readonly ILogger _logger;
 
-	public SalesPersister(IMongoClient mongoClient, ILoggerFactory loggerFactory)
+	public WarehousesPersister(IMongoClient mongoClient, ILoggerFactory loggerFactory)
 	{
-		_database = mongoClient.GetDatabase("Sales");
+		_database = mongoClient.GetDatabase("Warehouses");
 		_logger = loggerFactory.CreateLogger(GetType());
 	}
 
