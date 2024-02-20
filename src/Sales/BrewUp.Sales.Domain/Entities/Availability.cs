@@ -1,9 +1,9 @@
-﻿using BrewUp.Shared.CustomTypes;
+﻿using BrewUp.Sales.SharedKernel.Events;
+using BrewUp.Shared.CustomTypes;
 using BrewUp.Shared.DomainIds;
-using BrewUp.Warehouses.SharedKernel.Events;
 using Muflone.Core;
 
-namespace BrewUp.Warehouses.Domain.Entities;
+namespace BrewUp.Sales.Domain.Entities;
 
 public class Availability : AggregateRoot
 {
@@ -22,10 +22,10 @@ public class Availability : AggregateRoot
 
 	private Availability(BeerId beerId, BeerName beerName, Quantity quantity, Guid correlationId)
 	{
-		RaiseEvent(new AvailabilityUpdatedDueToProductionOrder(beerId, correlationId, beerName, quantity));
+		RaiseEvent(new AvailabilityUpdatedDueToWarehousesNotification(beerId, correlationId, beerName, quantity));
 	}
 
-	private void Apply(AvailabilityUpdatedDueToProductionOrder @event)
+	private void Apply(AvailabilityUpdatedDueToWarehousesNotification @event)
 	{
 		Id = @event.BeerId;
 
@@ -37,6 +37,6 @@ public class Availability : AggregateRoot
 	internal void UpdateAvailability(Quantity quantity, Guid correlationId)
 	{
 		quantity = _quantity with { Value = _quantity.Value + quantity.Value };
-		RaiseEvent(new AvailabilityUpdatedDueToProductionOrder(_beerId, correlationId, _beerName, quantity));
+		RaiseEvent(new AvailabilityUpdatedDueToWarehousesNotification(_beerId, correlationId, _beerName, quantity));
 	}
 }

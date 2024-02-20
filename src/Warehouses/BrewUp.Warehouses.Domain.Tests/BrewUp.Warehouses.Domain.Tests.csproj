@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="Muflone.SpecificationTests" Version="6.0.0" />
+    <PackageReference Include="Muflone.SpecificationTests" Version="8.0.0" />
     <PackageReference Include="xunit" Version="2.7.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
+    <ProjectReference Include="..\BrewUp.Warehouses.Domain\BrewUp.Warehouses.Domain.csproj" />
+    <ProjectReference Include="..\BrewUp.Warehouses.SharedKernel\BrewUp.Warehouses.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

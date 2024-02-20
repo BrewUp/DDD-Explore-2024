@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BrewUp.Infrastructure\BrewUp.Infrastructure.csproj" />
     <ProjectReference Include="..\..\BrewUp.Shared\BrewUp.Shared.csproj" />
+    <ProjectReference Include="..\BrewUp.Sales.Acl\BrewUp.Sales.Acl.csproj" />
     <ProjectReference Include="..\BrewUp.Sales.Domain\BrewUp.Sales.Domain.csproj" />
     <ProjectReference Include="..\BrewUp.Sales.SharedKernel\BrewUp.Sales.SharedKernel.csproj" />
   </ItemGroup>

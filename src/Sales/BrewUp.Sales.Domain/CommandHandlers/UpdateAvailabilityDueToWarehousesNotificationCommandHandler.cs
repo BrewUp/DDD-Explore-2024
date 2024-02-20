@@ -1,18 +1,18 @@
-﻿using BrewUp.Warehouses.Domain.Entities;
-using BrewUp.Warehouses.SharedKernel.Commands;
+﻿using BrewUp.Sales.Domain.Entities;
+using BrewUp.Sales.SharedKernel.Commands;
 using Microsoft.Extensions.Logging;
 using Muflone.Persistence;
 
-namespace BrewUp.Warehouses.Domain.CommandHandlers;
+namespace BrewUp.Sales.Domain.CommandHandlers;
 
-public sealed class UpdateAvailabilityDueToProductionOrderCommandHandler : CommandHandlerBaseAsync<UpdateAvailabilityDueToProductionOrder>
+public sealed class UpdateAvailabilityDueToWarehousesNotificationCommandHandler : CommandHandlerBaseAsync<UpdateAvailabilityDueToWarehousesNotification>
 {
-	public UpdateAvailabilityDueToProductionOrderCommandHandler(IRepository repository, ILoggerFactory loggerFactory) :
-		base(repository, loggerFactory)
+	public UpdateAvailabilityDueToWarehousesNotificationCommandHandler(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
 	{
 	}
 
-	public override async Task ProcessCommand(UpdateAvailabilityDueToProductionOrder command, CancellationToken cancellationToken = default)
+	public override async Task ProcessCommand(UpdateAvailabilityDueToWarehousesNotification command,
+		CancellationToken cancellationToken = default)
 	{
 		try
 		{
