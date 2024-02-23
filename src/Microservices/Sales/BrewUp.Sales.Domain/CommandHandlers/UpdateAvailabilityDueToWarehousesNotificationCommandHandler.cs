@@ -17,22 +17,13 @@ public sealed class UpdateAvailabilityDueToWarehousesNotificationCommandHandler 
 		try
 		{
 			var aggregate = await Repository.GetByIdAsync<Availability>(command.BeerId.Value);
-			if (aggregate == null || aggregate.Id is null)
-			{
-				aggregate = Availability.CreateAvailability(command.BeerId, command.BeerName, command.Quantity, command.MessageId);
-			}
-			else
-			{
-				aggregate.UpdateAvailability(command.Quantity, command.MessageId);
-			}
-
-			await Repository.SaveAsync(aggregate, Guid.NewGuid());
+			aggregate.UpdateAvailability(command.Quantity, command.MessageId);
 		}
-		catch (Exception e)
+		catch
 		{
-			// I'm lazy ... I should raise an event here
-			Console.WriteLine(e);
-			throw;
+			// I'm lazy, I don't want to handle the exception
+			var aggregate = Availability.CreateAvailability(command.BeerId, command.BeerName, command.Quantity, command.MessageId);
+			await Repository.SaveAsync(aggregate, Guid.NewGuid());
 		}
 	}
 }

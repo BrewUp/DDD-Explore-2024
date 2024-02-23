@@ -39,6 +39,8 @@ public class SalesOrder : AggregateRoot
 
 	private void Apply(SalesOrderCreated @event)
 	{
+		Id = @event.SalesOrderId;
+
 		_salesOrderId = @event.SalesOrderId;
 		_salesOrderNumber = @event.SalesOrderNumber;
 		_orderDate = @event.OrderDate;
