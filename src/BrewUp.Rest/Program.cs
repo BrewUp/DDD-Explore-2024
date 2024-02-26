@@ -6,8 +6,10 @@ using BrewUp.ReadModel.Sales.Queries;
 using BrewUp.ReadModel.Sales.Services;
 using BrewUp.ReadModel.Warehouses.Queries;
 using BrewUp.ReadModel.Warehouses.Services;
+using BrewUp.Sales.Infrastructures;
 using BrewUp.Shared.Entities;
 using BrewUp.Shared.ReadModel;
+using BrewUp.Warehouses.Infrastructures;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
@@ -33,30 +35,29 @@ builder.Services.AddSwaggerGen(setup => setup.SwaggerDoc("v1", new OpenApiInfo()
 
 builder.Services.AddMongoDb(builder.Configuration.GetSection("BrewUp:MongoDbSettings").Get<MongoDbSettings>()!);
 
+builder.Services.AddKeyedScoped<IRepository, SalesRepository>("sales");
+builder.Services.AddKeyedScoped<IRepository, WarehousesRepository>("warehouses");
+
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddScoped<ISalesService, SalesService>();
 builder.Services.AddScoped<ISalesDomainService, SalesDomainService>();
 builder.Services.AddScoped<ISalesQueryService, SalesQueryService>();
 builder.Services.AddScoped<IQueries<SalesOrder>, SalesOrderQueries>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<SetAvailabilityValidator>();
 builder.Services.AddSingleton<ValidationHandler>();
-builder.Services.AddScoped<IWarehousesService, WarehousesService>();
 builder.Services.AddScoped<IWarehousesDomainService, WarehousesDomainService>();
 builder.Services.AddScoped<IAvailabilityQueryService, AvailabilityQueryService>();
 builder.Services.AddScoped<IQueries<Availability>, AvailabilityQueries>();
-
 
 var app = builder.Build();
 
 app.UseCors("CorsPolicy");
 
-
 //Sales
 var salesGroup = app.MapGroup("/v1/sales/").WithTags("Sales");
 salesGroup.MapGet("/", SalesService.HandleGetOrders)
-	.Produces(StatusCodes.Status400BadRequest)
-	.Produces(StatusCodes.Status200OK)
+	//.Produces(StatusCodes.Status404NotFound)
+	//.Produces(StatusCodes.Status200OK)
 	.WithName("GetSalesOrders");
 
 //Warehouses

@@ -1,30 +1,30 @@
-﻿using BrewUp.DomainModel.Services;
-using BrewUp.ReadModel.Sales.Services;
+﻿using BrewUp.ReadModel.Sales.Services;
 using BrewUp.Shared.Contracts;
-using BrewUp.Shared.CustomTypes;
 using BrewUp.Shared.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BrewUp.ApplicationServices
 {
-	public class SalesService(ISalesDomainService salesDomainService,
-	ISalesQueryService salesQueryService) : ISalesService
-	{
-		public async Task<string> CreateOrderAsync(SalesOrderJson body, CancellationToken cancellationToken)
+	public static class SalesService 
+	{	
+		public static async Task<Results<Ok<PagedResult<SalesOrderJson>>, NotFound>> HandleGetOrders(ISalesQueryService salesQueryService, CancellationToken cancellationToken)
 		{
-			if (body.SalesOrderId.Equals(string.Empty))
-				body = body with { SalesOrderId = Guid.NewGuid().ToString() };
-
-			await salesDomainService.CreateSalesOrderAsync(new SalesOrderId(new Guid(body.SalesOrderId)),
-				new SalesOrderNumber(body.SalesOrderNumber), new OrderDate(body.OrderDate),
-				new CustomerId(body.CustomerId), new CustomerName(body.CustomerName),
-				body.Rows, cancellationToken);
-
-			return body.SalesOrderId;
+			var orders = await salesQueryService.GetSalesOrdersAsync(0, 30, cancellationToken);
+			return TypedResults.Ok(orders);
 		}
 
-		public async Task<PagedResult<SalesOrderJson>> GetOrdersAsync(CancellationToken cancellationToken)
-		{
-			return await salesQueryService.GetSalesOrdersAsync(0, 30, cancellationToken);
-		}
+		//public static async Task<string> CreateOrderAsync(SalesOrderJson body, ISalesDomainService salesDomainService, CancellationToken cancellationToken)
+		//{
+		//	if (body.SalesOrderId.Equals(string.Empty))
+		//		body = body with { SalesOrderId = Guid.NewGuid().ToString() };
+
+		//	await salesDomainService.CreateSalesOrderAsync(new SalesOrderId(new Guid(body.SalesOrderId)),
+		//		new SalesOrderNumber(body.SalesOrderNumber), new OrderDate(body.OrderDate),
+		//		new CustomerId(body.CustomerId), new CustomerName(body.CustomerName),
+		//		body.Rows, cancellationToken);
+
+		//	return body.SalesOrderId;
+		//}
 	}
 }

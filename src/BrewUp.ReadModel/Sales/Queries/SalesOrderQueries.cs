@@ -1,5 +1,4 @@
-﻿using BrewUp.ReadModel.Sales.Dtos;
-using BrewUp.Shared.Entities;
+﻿using BrewUp.Shared.Entities;
 using BrewUp.Shared.ReadModel;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;

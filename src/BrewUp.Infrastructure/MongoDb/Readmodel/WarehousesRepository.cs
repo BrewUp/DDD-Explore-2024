@@ -14,7 +14,7 @@ public class WarehousesRepository : IRepository
 		ILoggerFactory loggerFactory)
 	{
 		_logger = loggerFactory.CreateLogger(GetType());
-		_database = mongoClient.GetDatabase("Warehouses");
+		_database = mongoClient.GetDatabase("Sales");
 	}
 
 	public async Task<T> GetByIdAsync<T>(string id, CancellationToken cancellationToken) where T : EntityBase

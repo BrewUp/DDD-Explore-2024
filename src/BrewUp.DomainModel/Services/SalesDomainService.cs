@@ -2,10 +2,11 @@
 using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
 using BrewUp.Shared.ReadModel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BrewUp.DomainModel.Services;
 
-public sealed class SalesDomainService(IRepository repository) : ISalesDomainService
+public sealed class SalesDomainService([FromKeyedServices("sales")] IRepository repository) : ISalesDomainService
 {
 	public async Task CreateSalesOrderAsync(SalesOrderId salesOrderId, SalesOrderNumber salesOrderNumber, OrderDate orderDate,
 		CustomerId customerId, CustomerName customerName, IEnumerable<SalesOrderRowJson> rows, CancellationToken cancellationToken)

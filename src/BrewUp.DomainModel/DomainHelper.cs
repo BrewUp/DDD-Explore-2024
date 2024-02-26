@@ -17,7 +17,7 @@ public static class DomainHelper
 		return json.Select(r => SalesOrderRow.CreateSalesOrderRow(new BeerId(r.BeerId), new BeerName(r.BeerName), r.Quantity, r.Price));
 	}
 
-	internal static Shared.Entities.SalesOrder MapToReadModel(this SalesOrder salesOrder)
+	internal static Shared.Entities.SalesOrder MapToReadModel(this Entities.Sales.SalesOrder salesOrder)
 	{
 		return Shared.Entities.SalesOrder.Create(salesOrder._salesOrderId, salesOrder._salesOrderNumber,
 						salesOrder._orderDate, salesOrder._customerId, salesOrder._customerName,

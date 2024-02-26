@@ -1,5 +1,4 @@
-﻿using BrewUp.DomainModel.Entities.Sales;
-using BrewUp.Shared.Contracts;
+﻿using BrewUp.Shared.Contracts;
 using BrewUp.Shared.CustomTypes;
 
 namespace BrewUp.DomainModel.Services;
