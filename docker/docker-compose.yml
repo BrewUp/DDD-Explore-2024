@@ -6,7 +6,7 @@ services:
      
      container_name: "sales-eventstore"
      
-     image: eventstore/eventstore:latest
+     image: eventstore/eventstore:23.10.1-jammy
 
      environment:
          - EVENTSTORE_CLUSTER_SIZE=1
