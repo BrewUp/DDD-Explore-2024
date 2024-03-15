@@ -13,18 +13,5 @@ namespace BrewUp.ApplicationServices
 			var orders = await salesQueryService.GetSalesOrdersAsync(0, 30, cancellationToken);
 			return TypedResults.Ok(orders);
 		}
-
-		//public static async Task<string> CreateOrderAsync(SalesOrderJson body, ISalesDomainService salesDomainService, CancellationToken cancellationToken)
-		//{
-		//	if (body.SalesOrderId.Equals(string.Empty))
-		//		body = body with { SalesOrderId = Guid.NewGuid().ToString() };
-
-		//	await salesDomainService.CreateSalesOrderAsync(new SalesOrderId(new Guid(body.SalesOrderId)),
-		//		new SalesOrderNumber(body.SalesOrderNumber), new OrderDate(body.OrderDate),
-		//		new CustomerId(body.CustomerId), new CustomerName(body.CustomerName),
-		//		body.Rows, cancellationToken);
-
-		//	return body.SalesOrderId;
-		//}
 	}
 }
