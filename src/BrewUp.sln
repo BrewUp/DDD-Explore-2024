@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrewUp.Mediator", "BrewUp.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrewUp.Sales.Domain", "Sales\BrewUp.Sales.Domain\BrewUp.Sales.Domain.csproj", "{07BE847B-6231-4CC3-AB63-0982AC1F0277}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrewUp.Saless.Architecture.Tests", "Sales\BrewUp.Saless.Architecture.Tests\BrewUp.Saless.Architecture.Tests.csproj", "{2E5BE2E2-9676-48BA-A2C4-7C76CDC2176C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrewUp.Sales.Architecture.Tests", "Sales\BrewUp.Sales.Architecture.Tests\BrewUp.Sales.Architecture.Tests.csproj", "{2E5BE2E2-9676-48BA-A2C4-7C76CDC2176C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrewUp.Sales.Facade", "Sales\BrewUp.Sales.Facade\BrewUp.Sales.Facade.csproj", "{207755DA-1C84-4470-827B-689C885DA084}"
 EndProject
